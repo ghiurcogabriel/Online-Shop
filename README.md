@@ -85,3 +85,8 @@ var firebaseConfig = {
   };
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
+
+  bananajoe@yahoo.com
+  banana
+
+  
