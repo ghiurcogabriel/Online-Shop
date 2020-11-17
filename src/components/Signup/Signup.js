@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './Signup.scss';
+import {auth, handleUserProfile} from '../../Firebase/Utils';
 
+import AutoWrapper from '../AuthWrapper/AuthWrapper'
 import FormInput from '../Forms/FormInput/FormInput';
 import Button from '../Forms/Button/Button';
 
@@ -8,7 +10,8 @@ const initialState ={
     displayName: '',
     email: '',
     password: '',
-    cosfirmPassword: ''
+    confirmPassword: '',
+    errors: []
 }
 
 export default class Signup extends Component {
@@ -30,17 +33,44 @@ export default class Signup extends Component {
         })
     }
 
+    handleFormSubmit = async event => {
+        event.preventDefault();
+        const {displayName, email, password, confirmPassword} = this.state;
+
+        if(password !== confirmPassword){
+            const err = ['Password don\'t match'];
+            this.setState({
+                errors: err
+            });
+            return
+        }
+
+        try {
+
+           const {user} = await auth.createUserWithEmailAndPassword(email, password);
+
+           await handleUserProfile(user, {displayName});
+
+           this.setState({
+               ...initialState
+           });
+
+        } catch(err){
+            // console.log(err)
+        }
+    }
+
     render() {
-        const {displayName, email, password, cosfirmPassword} = this.state;
+        const {displayName, email, password, confirmPassword, errors} = this.state;
+
+        const configSignupWrapper = {
+            headline: 'Signup'
+        }
 
         return (
-            <div className='signup'>
-                <div className='wrap'>
-                    <h2>Signup</h2>
-
-
+            <AutoWrapper {...configSignupWrapper}>
                 <div className="formWrap">
-                    <form>
+                    <form onSubmit={this.handleFormSubmit}>
                         <FormInput 
                             type='text'
                             name="displayName"
@@ -65,19 +95,30 @@ export default class Signup extends Component {
                         />
                         <FormInput 
                             type='password'
-                            name="cosfirmPassword"
-                            value={cosfirmPassword}
+                            name="confirmPassword"
+                            value={confirmPassword}
                             placeholder='Confirm Password'
                             onChange={this.handleChange}
                         />
+
+                        {errors.length > 0 && (
+                            <ul>
+                                {errors.map((err, index) =>{
+                                    return(
+                                        <li key={index}>
+                                            {err}
+                                        </li>
+                                    )
+                                })}
+                            </ul>
+                        )}
 
                         <Button type="submit">
                             Register
                         </Button>
                     </form>
                 </div>
-            </div>
-        </div>
+            </AutoWrapper>
         )
     }
 }
