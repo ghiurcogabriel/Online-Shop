@@ -1,12 +1,22 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { signOutUserStart } from './../../Redux/User/User.actions';
 import './index.scss';
-import logo from '../../assets/logo.png'
+import logo from '../../assets/logo.png';
 import { Link } from 'react-router-dom';
-import { auth } from '../../Firebase/Utils'
+
+
+const mapState = ({user}) => ({
+    currentUser: user.currentUser
+});
 
 const Header = props=> {
 
-    const {currentUser} = props;
+    const dispatch = useDispatch();
+    const {currentUser} = useSelector(mapState);
+    const signOut = () => {
+        dispatch(signOutUserStart)
+    }
 
     return (
     <header className='title'>
@@ -22,7 +32,12 @@ const Header = props=> {
                 {currentUser && (
                     <ul>
                         <li>
-                            <span style={{cursor: 'pointer'}} onClick={() => auth.signOut()}>LogOut</span>
+                        <Link to='/dashboard'>
+                            My Account
+                        </Link>
+                    </li>
+                        <li>
+                            <span style={{cursor: 'pointer'}} onClick={() => signOut()}>LogOut</span>
                         </li>
                     </ul>
                 )}

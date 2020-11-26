@@ -1,97 +1,94 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useHistory } from 'react-router-dom';
+import { emailSignInStart, googleSignInStart } from './../../Redux/User/User.actions';
+
 import './Signin.scss';
-import Button from '../../components/Forms/Button/Button';
-import {sigInWithGoogle, auth} from '../../Firebase/Utils';
-import { Link} from 'react-router-dom'
 
-import AuthWrapper from '../AuthWrapper/AuthWrapper'
-import FormInput from '../Forms/FormInput/FormInput';
+import AuthWrapper from './../AuthWrapper/AuthWrapper';
+import FormInput from './../Forms/FormInput/FormInput';
+import Button from './../Forms/Button/Button';
 
+const mapState = ({ user }) => ({
+  currentUser: user.currentUser
+});
 
-const initialState = {
-    email:'',
-    password: ''
-};
+const SignIn = props => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const { currentUser } = useSelector(mapState);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('')
 
-export default class Signin extends Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            ...initialState
-        }
-        this.handleChange = this.handleChange.bind(this);
+  useEffect(() => {
+    if (currentUser) {
+      resetForm();
+      history.push('/');
     }
 
-    handleChange(e){
-        const {name, value} = e.target;
-        this.setState({
-            [name]: value
-        })
-    }
+  }, [currentUser]);
 
-    handleSubmit = async e => {
-        e.preventDefault();
-        const {email, password} = this.state;
+  const resetForm = () => {
+    setEmail('');
+    setPassword('');
+  };
 
-        try {
+  const handleSubmit = e => {
+    e.preventDefault();
+    dispatch(emailSignInStart({ email, password }));
+  }
 
-            await auth.signInWithEmailAndPassword(email, password);
-            this.state({
-                ...initialState
-            })
+  const handleGoogleSignIn = () => {
+    dispatch(googleSignInStart());
+  }
 
-        } catch(err){
-            console.log(err);
-        }
-    }
+  const configAuthWrapper = {
+    headline: 'LogIn'
+  };
 
-    render(){
-        const {email, password} = this.state;
+  return (
+    <AuthWrapper {...configAuthWrapper}>
+      <div className="formWrap">
+        <form onSubmit={handleSubmit}>
 
-        const configAuthWrapper = {
-            headline: 'Login'
-        }
+          <FormInput
+            type="email"
+            name="email"
+            value={email}
+            placeholder="Email"
+            handleChange={e => setEmail(e.target.value)}
+          />
 
-        return (
-        <AuthWrapper {...configAuthWrapper}>
-                <div className='formWrap'>
-                    <form onSubmit={this.handleSubmit}>
+          <FormInput
+            type="password"
+            name="password"
+            value={password}
+            placeholder="Password"
+            handleChange={e => setPassword(e.target.value)}
+          />
 
-                        <FormInput 
-                            type='email'
-                            name='email'
-                            value={email}
-                            placeholder='Email'
-                            handleChange={this.handleChange}
-                        />
-                        <FormInput 
-                            type='password'
-                            name='password'
-                            value={password}
-                            placeholder='Password'
-                            handleChange={this.handleChange}
-                        />
+          <Button type="submit">
+            LogIn
+            </Button>
 
-                        <Button type='submit'>
-                            LogIn
-                        </Button>
+          <div className="socialSignin">
+            <div className="row">
+              <Button onClick={handleGoogleSignIn}>
+                Sign in with Google
+              </Button>
+            </div>
+          </div>
 
-                        <div className='socialSignin'>
-                            <div className='row'>
-                                <Button onClick={sigInWithGoogle} >
-                                    Sign in with Google
-                                </Button>
-                            </div>
-                        </div>
-                        <div className='links'>
-                            <Link to='/recovery'>
-                                Reset Password
-                            </Link>
-                        </div>
-                    </form>
-                </div>
-        </AuthWrapper>
-    )
-    }
+          <div className="links">
+            <Link to="/recovery">
+              Reset Password
+              </Link>
+          </div>
+
+        </form>
+      </div>
+    </AuthWrapper>
+  );
 }
+
+export default SignIn;
