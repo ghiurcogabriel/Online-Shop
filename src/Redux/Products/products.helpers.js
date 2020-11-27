@@ -58,7 +58,7 @@ export const handleDeleteProduct = documentID => {
       .doc(documentID)
       .delete()
       .then(() => {
-        console.log(documentID, 2)
+        // console.log(documentID, 2)
         resolve();
       })
       .catch(err => {

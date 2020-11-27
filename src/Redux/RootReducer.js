@@ -18,4 +18,4 @@ const configStorage = {
   whitelist: ['cartData']
 };
 
-export default persistReducer(configStorage, rootReducer)
+export default persistReducer(configStorage, rootReducer);

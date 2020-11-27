@@ -1,8 +1,7 @@
 import { auth } from './../../Firebase/Utils';
 import { takeLatest, put, all, call } from 'redux-saga/effects';
 import { setProducts, setProduct, fetchProductsStart } from './products.actions';
-import { handleAddProduct, handleFetchProducts,
-  handleFetchProduct, handleDeleteProduct } from './products.helpers';
+import { handleAddProduct, handleFetchProducts, handleFetchProduct, handleDeleteProduct } from './products.helpers';
 import productsTypes from './products.types';
 
 export function* addProduct({ payload }) {
