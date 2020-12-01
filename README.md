@@ -74,7 +74,7 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 
 
-var firebaseConfig = {
+<!-- var firebaseConfig = {
     apiKey: "AIzaSyB_HauZtfWvGOI-HSQ2BGVKatRazD0SCtc",
     authDomain: "online-shop-6958e.firebaseapp.com",
     databaseURL: "https://online-shop-6958e.firebaseio.com",
@@ -87,6 +87,6 @@ var firebaseConfig = {
   firebase.initializeApp(firebaseConfig);
 
   bananajoe@yahoo.com
-  banana
+  banana -->
 
   

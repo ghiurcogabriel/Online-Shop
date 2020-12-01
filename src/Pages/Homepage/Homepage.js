@@ -2,10 +2,12 @@ import React from 'react';
 import Directory from '../../components/Directory/Directory';
 import './Homepage.scss'
 
-export default function Homepage() {
+const Homepage = props => {
     return (
-        <section className='homepage'>
-                <Directory />
-        </section>
-    )
-}
+      <section className="homepage">
+        <Directory />
+      </section>
+    );
+  };
+  
+  export default Homepage;

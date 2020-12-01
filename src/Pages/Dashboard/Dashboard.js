@@ -1,10 +1,12 @@
 import { React } from 'react';
 import './Dashboard.scss'
 
-const Dasboard = props => {
+const Dashboard = props => {
     return (
-        <h1>Your logged in!</h1>
-    )
-}
-
-export default Dasboard;
+      <h1>
+        Welcome to your account
+      </h1>
+    );
+  };
+  
+  export default Dashboard;

@@ -60,9 +60,11 @@ export function* onDeleteProductStart() {
   yield takeLatest(productsTypes.DELETE_PRODUCT_START, deleteProduct);
 }
 
-export function* fetchProduct({ payload }) {
+export function* fetchProduct({ payload: {
+  filterType
+} }) {
   try {
-    const product = yield handleFetchProduct(payload);
+    const product = yield handleFetchProduct(filterType);
     yield put(
       setProduct(product)
     );

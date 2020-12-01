@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { signOutUserStart } from './../redux/User/user.actions';
+import { signOutUserStart } from './../Redux/User/User.actions';
 
 import Header from './../components/Header';
-import VerticalNav from './../components/VerticalNav';
-import Footer from './../components/Footer';
+import VerticalNav from './../components/VerticalNav/VerticalNav';
+import Footer from './../components/Footer/Footer';
 
 const AdminLayout = props => {
   const dispatch = useDispatch();
@@ -22,7 +22,7 @@ const AdminLayout = props => {
           <VerticalNav>
             <ul>
               <li>
-                <Link to="/admin">
+                <Link to="/">
                   Home
                 </Link>
               </li>

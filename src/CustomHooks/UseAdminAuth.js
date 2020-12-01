@@ -4,21 +4,22 @@ import { useHistory } from 'react-router-dom';
 import { checkUserIsAdmin } from './../Utils/Utils';
 
 const mapState = ({ user }) => ({
-    currentUser: user.currentUser
-  });
-  
+  currentUser: user.currentUser
+});
+
 const useAdminAuth = props => {
-    const { currentUser } = useSelector(mapState);
-    const history = useHistory();
-  
-    useEffect(() => {
-      if (!checkUserIsAdmin(currentUser)) {
-        history.push('/login');
-      }
-  
-    }, [currentUser]);
-  
-    return currentUser;
-  };
-  
-  export default useAdminAuth;
+  const { currentUser } = useSelector(mapState);
+  const history = useHistory();
+
+  useEffect(() => {
+    if (!checkUserIsAdmin(currentUser)) {
+      history.push('/login');
+    }
+
+  }, [currentUser, history]);
+
+  return currentUser;
+}
+
+export default useAdminAuth;
+

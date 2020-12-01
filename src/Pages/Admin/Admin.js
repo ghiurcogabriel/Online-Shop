@@ -5,7 +5,7 @@ import Modal from './../../components/Modal/Modal';
 import FormInput from './../../components/Forms/FormInput/FormInput';
 import FormSelect from './../../components/Forms/FormSelect/FormSelect';
 import Button from './../../components/Forms/Button/Button';
-// import LoadMore from './../../components/LoadMore';
+import LoadMore from './../../components/LoadMore/LoadMore';
 // import CKEditor from 'ckeditor4-react';
 import './Admin.scss';
 
@@ -29,7 +29,6 @@ const Admin = props => {
     dispatch(
       fetchProductsStart()
     );
-
   }, []);
 
   const toggleModal = () => setHideModal(!hideModal);
@@ -74,7 +73,7 @@ const Admin = props => {
   };
 
   const configLoadMore = {
-    onLoadMoreEvt: handleLoadMore,
+    onLoadMoreEvt: handleLoadMore
   };
 
   return (
@@ -161,9 +160,9 @@ const Admin = props => {
             </tr>
             <tr>
               <td>
-                <table className="results" border="0" cellPadding="10" cellSpacing="0">
+                <table className="results" border="0" cellPadding="30" cellSpacing="0">
                   <tbody>
-                    {(Array.isArray(data) && data.length > 0) && data.map((product, index) => {
+                     {(Array.isArray(data) && data.length > 0) && data.map((product, index) => {
                       const {
                         productName,
                         productThumbnail,
@@ -204,11 +203,11 @@ const Admin = props => {
                 <table border="0" cellPadding="10" cellSpacing="0">
                   <tbody>
                     <tr>
-                      {/* <td>
+                      <td>
                         {!isLastPage && (
                           <LoadMore {...configLoadMore} />
                         )}
-                      </td> */}
+                      </td>
                     </tr>
                   </tbody>
                 </table>
