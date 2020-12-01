@@ -15,7 +15,7 @@ const Header = props=> {
     const dispatch = useDispatch();
     const {currentUser} = useSelector(mapState);
     const signOut = () => {
-        dispatch(signOutUserStart)
+        dispatch(signOutUserStart());
     }
 
     return (
@@ -26,6 +26,21 @@ const Header = props=> {
                     <img src={logo} alt='logo' />
                 </Link>
             </div>
+
+            <nav>
+                <ul>
+                    <li>
+                        <Link to="/">
+                            Home
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/search">
+                            Search
+                        </Link>
+                    </li>
+                </ul>
+            </nav>
 
             <div className='callToActions'>
 
@@ -64,8 +79,8 @@ const Header = props=> {
   
 }
 
-Header.defaultProps = {
-    currentUser: null,
-}
+// Header.defaultProps = {
+//     currentUser: null,
+// }
 
 export default Header;

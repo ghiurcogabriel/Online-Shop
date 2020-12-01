@@ -1,8 +1,7 @@
 import { auth } from './../../Firebase/Utils';
 import { takeLatest, put, all, call } from 'redux-saga/effects';
 import { setProducts, setProduct, fetchProductsStart } from './products.actions';
-import { handleAddProduct, handleFetchProducts,
-  handleFetchProduct, handleDeleteProduct } from './products.helpers';
+import { handleAddProduct, handleFetchProducts, handleFetchProduct, handleDeleteProduct } from './products.helpers';
 import productsTypes from './products.types';
 
 export function* addProduct({ payload }) {
@@ -61,9 +60,11 @@ export function* onDeleteProductStart() {
   yield takeLatest(productsTypes.DELETE_PRODUCT_START, deleteProduct);
 }
 
-export function* fetchProduct({ payload }) {
+export function* fetchProduct({ payload: {
+  filterType
+} }) {
   try {
-    const product = yield handleFetchProduct(payload);
+    const product = yield handleFetchProduct(filterType);
     yield put(
       setProduct(product)
     );
